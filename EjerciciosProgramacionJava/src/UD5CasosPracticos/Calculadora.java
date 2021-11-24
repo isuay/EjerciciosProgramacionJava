@@ -90,7 +90,7 @@ public class Calculadora {
             System.out.print("Valor entre " + min + " y " + max + ": ");
             valor = in.nextDouble();
             if (valor < min || valor > max) {
-                System.out.println("\nAVISO: valor no válido.\n");
+                System.out.println("\nERROR: número no válido.\n");
             }
         } while (valor < min || valor > max);
 
@@ -110,7 +110,7 @@ public class Calculadora {
 
         double total = a + b;
 
-        System.out.println("Total: " + total);
+        System.out.println("\nTotal: " + total);
     }
 
 // Pide A y B, calcula la resta y la muestra
@@ -126,7 +126,7 @@ public class Calculadora {
 
         double total = a - b;
 
-        System.out.println("Total: " + total);
+        System.out.println("\nTotal: " + total);
     }
 
 // Pide A y B, calcula la mult y la muestra
@@ -142,7 +142,7 @@ public class Calculadora {
 
         double total = a * b;
 
-        System.out.println("Total: " + total);
+        System.out.println("\nTotal: " + total);
     }
 
 // Pide A y B, calcula la div y la muestra
@@ -158,9 +158,9 @@ public class Calculadora {
 
         if (b != 0) {
             double total = a / b;
-            System.out.println("Total: " + total);
+            System.out.println("\nTotal: " + total);
         } else {
-            System.out.println("No se puede dividir entre 0");
+            System.out.println("\nNo se puede dividir entre 0");
         }
 
     }
@@ -178,7 +178,7 @@ public class Calculadora {
 
         double total = (a * b) * 1.0;
 
-        System.out.println("Total: " + total);
+        System.out.println("\nTotal: " + total);
     }
 
 // Pide Base y Altura en rango 0-1Millon, calcula area triangulo y lo muestra
@@ -194,7 +194,7 @@ public class Calculadora {
 
         double total = a * b / 2.0;
 
-        System.out.println("Total: " + total);
+        System.out.println("\nTotal: " + total);
     }
 
 // Pide Radio en rango 0-1Millon, calcula area ciculo y lo muestra
@@ -202,11 +202,12 @@ public class Calculadora {
 
         Scanner in = new Scanner(System.in);
 
+        System.out.print("Radio del circulo --> ");
         double a = pedirIntEnRango(0, 1000000);
 
         double total = Math.PI * Math.pow(a, 2);
 
-        System.out.println("Total: " + total);
+        System.out.println("\nTotal: " + total);
     }
 
 // Pide X en rango -360 a 360, calcula y muestra Sin, Cos y Tan de X
@@ -220,7 +221,7 @@ public class Calculadora {
         double cos = Math.cos(a);
         double tan = Math.tan(a);
 
-        System.out.println("Seno: " + sen);
+        System.out.println("\nSeno: " + sen);
         System.out.println("Coseno: " + cos);
         System.out.println("Tangente: " + tan);
 
