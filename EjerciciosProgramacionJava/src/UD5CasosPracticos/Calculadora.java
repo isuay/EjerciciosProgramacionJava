@@ -42,7 +42,7 @@ public class Calculadora {
                 + "8. Seno, Coseno y Tangente (de X)\n"
                 + "9. Salir.");
 
-        int opcion = pedirIntEnRango(1, 9);
+        int opcion = (int)pedirIntEnRango(1, 9);
 
         return opcion;
     }
@@ -67,7 +67,7 @@ public class Calculadora {
                 areaRectangulo();
                 break;
             case 6:
-                areaTrinagulo();
+                areaTriangulo();
                 break;
             case 7:
                 areaCirculo();
@@ -81,14 +81,14 @@ public class Calculadora {
     }
 
 // Pide al usuario un valor int, una y otra vez hasta que responde con valor en rango, devuelve el valor
-    public static int pedirIntEnRango(int min, int max) {
+    public static double pedirIntEnRango(double min, double max) {
 
         Scanner in = new Scanner(System.in);
-        int valor;
+        double valor;
 
         do {
-            System.out.print("Dime un valor entre: " + min + " y " + max + ": ");
-            valor = in.nextInt();
+            System.out.print("Valor entre " + min + " y " + max + ": ");
+            valor = in.nextDouble();
             if (valor < min || valor > max) {
                 System.out.println("\nAVISO: valor no válido.\n");
             }
@@ -170,29 +170,29 @@ public class Calculadora {
 
         Scanner in = new Scanner(System.in);
 
-        System.out.println(pedirIntEnRango(0, 1000000));
-        double a = in.nextDouble();
+        System.out.print("Base del rectangulo --> ");
+        double a = pedirIntEnRango(0, 1000000);
 
-        System.out.println(pedirIntEnRango(0, 1000000));
-        double b = in.nextDouble();
+        System.out.print("Altura del rectangulo --> ");
+        double b = pedirIntEnRango(0, 1000000);
 
-        double total = a * b;
+        double total = (a * b) * 1.0;
 
         System.out.println("Total: " + total);
     }
 
 // Pide Base y Altura en rango 0-1Millon, calcula area triangulo y lo muestra
-    public static void areaTrinagulo() {
+    public static void areaTriangulo() {
 
         Scanner in = new Scanner(System.in);
 
-        System.out.println(pedirIntEnRango(0, 1000000));
-        double a = in.nextDouble();
+        System.out.print("Base del triangulo --> ");
+        double a = pedirIntEnRango(0, 1000000);
 
-        System.out.println(pedirIntEnRango(0, 1000000));
-        double b = in.nextDouble();
+        System.out.print("Altura del triangulo --> ");
+        double b = pedirIntEnRango(0, 1000000);
 
-        double total = a * b / 2;
+        double total = a * b / 2.0;
 
         System.out.println("Total: " + total);
     }
@@ -202,8 +202,7 @@ public class Calculadora {
 
         Scanner in = new Scanner(System.in);
 
-        System.out.println(pedirIntEnRango(0, 1000000));
-        double a = in.nextDouble();
+        double a = pedirIntEnRango(0, 1000000);
 
         double total = Math.PI * Math.pow(a, 2);
 
@@ -215,8 +214,7 @@ public class Calculadora {
 
         Scanner in = new Scanner(System.in);
 
-        System.out.println(pedirIntEnRango(-360, 360));
-        double a = in.nextDouble();
+        double a = pedirIntEnRango(-360, 360);
 
         double sen = Math.sin(a);
         double cos = Math.cos(a);
