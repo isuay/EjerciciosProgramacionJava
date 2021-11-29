@@ -5,6 +5,7 @@
  */
 package UD5CasosPracticos;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -15,272 +16,254 @@ import java.util.Scanner;
  */
 public class AppDeContactos {
 
+    // VARIABLES GLOBALES
+    public static int MAX = 100; // Máximo nº de contactos
+    public static int contar = 0;   // Nº de contactos registrados
+    public static String[] nombre = new String[MAX]; // vector de nombres
+    public static String[] tlf = new String[MAX]; // vector de teléfonos
+    public static String[] correo = new String[MAX]; // vector de correos
+
+    // MAIN PRINCIPAL
     public static void main(String[] args) {
 
-        int opcion;
+        // Variables auxiliares
+        int opcion;     // opcion del menú
+        String n, c, t; // nombre, correo y teléfono
+        String buscar;  // término a buscar
+        int pos;        // posicion
+        int[] vpos;     // vector de posiciones
 
+        // Bucle principal
         do {
             opcion = menu();
 
-            realizaOperacion(opcion);
+            switch (opcion) {
+                case 1:
+                    // Ver contactos
+                    verContactosTodos();
+                    break;
+                case 2:
+                    // Añadir contacto
+                    System.out.print("¿Nombre? ");
+                    n = pedirString();
+                    System.out.print("¿Teléfono? ");
+                    t = pedirString();
+                    System.out.print("¿Correo? ");
+                    c = pedirString();
+                    agregarContacto(n, t, c);
+                    break;
+                case 3:
+                    // Eliminar contacto
+                    System.out.print("¿ID de contacto a eliminar? ");
+                    pos = pedirIntEnRango(0, contar-1);
+                    eliminarContacto(pos);
+                    break;
+                case 4:
+                    // Buscar por nombre
+                    System.out.print("¿Nombre? ");
+                    buscar = pedirString();
+                    vpos = buscarContactos(nombre, buscar);
+                    verContactosVector(vpos);
+                    break;
+                case 5:
+                    // Buscar por teléfono
+                    System.out.print("¿Teléfono? ");
+                    buscar = pedirString();
+                    vpos = buscarContactos(tlf, buscar);
+                    verContactosVector(vpos);
+                    break;
+                case 6:
+                    // Buscar por correo
+                    System.out.print("¿Correo? ");
+                    buscar = pedirString();
+                    vpos = buscarContactos(correo, buscar);
+                    verContactosVector(vpos);
+                    break;
+                case 7:
+                    // Búsqueda global
+                    System.out.print("¿Término a buscar globalmente? ");
+                    buscar = pedirString();
+                    vpos = buscarGlobal(buscar);
+                    verContactosVector(vpos);
+                    break;
+                case 8:
+                    // Salir
+                    System.out.println("¡Gracias! ¡Hasta la próxima!");
+                    break;
+                default:
+                    System.out.println("Opción incorrecta.");
+                    break;
+            }
 
             System.out.println("");
-
         } while (opcion != 8);
     }
 
-    // Muestra el menú, pide al usuario valor rango 1-9 y devuelve la opción elegida.
+    /**
+     * FUNCIONES DEL MENÚ Y PEDIR DATOS AL USUARIO
+     */
+    
+    // Muestra el menú y devuelve la opción elegida por el usuario
     public static int menu() {
 
-        System.out.println("1. Ver contactos.\n"
-                + "2. Agregar contacto.\n"
-                + "3. Eliminar contacto.\n"
-                + "4. Buscar por nombre.\n"
-                + "5. Buscar por teléfono.\n"
-                + "6. Buscar por correo.\n"
-                + "7. Búsqueda global.\n"
-                + "8. Salir.");
-
-        int opcion = (int) pedirIntEnRango(1, 8);
+        System.out.println("1. Ver contactos");
+        System.out.println("2. Agregar contacto.");
+        System.out.println("3. Eliminar contacto.");
+        System.out.println("4. Buscar por nombre.");
+        System.out.println("5. Buscar por teléfono");
+        System.out.println("6. Buscar por correo.");
+        System.out.println("7. Búsqueda global.");
+        System.out.println("8. Salir.");
+        System.out.print("¿Opción? ");
+        
+        int opcion = pedirIntEnRango(1, 8);
 
         return opcion;
     }
 
-// Realiza la opción del menú indicada en 'int opcion' (1. Ver contactos, 2. Agregar contacto, etc.)
-    public static void realizaOperacion(int opcion) {
-
-        switch (opcion) {
-            case 1:
-                verContactos();
-                break;
-            case 2:
-                añadirContacto();
-                break;
-            case 3:
-                eliminarContacto();
-                break;
-            case 4:
-                buscarNombre();
-                break;
-            case 5:
-                buscarTelefono();
-                break;
-            case 6:
-                buscarCorreo();
-                break;
-            case 7:
-                buscarGlobal();
-                break;
-            case 8:
-                break;
-        }
-    }
-
-// Pide al usuario un valor int, una y otra vez hasta que responde con valor en rango, devuelve el valor
+    // Pide al usuario un valor int, una y otra vez hasta que responde con valor en rango
     public static int pedirIntEnRango(int min, int max) {
 
         Scanner in = new Scanner(System.in);
         int valor;
 
         do {
-            System.out.print("Valor entre " + min + " y " + max + ": ");
             valor = in.nextInt();
             if (valor < min || valor > max) {
-                System.out.println("\nERROR: número no válido.\n");
+                System.out.println("AVISO: No válido. Debe ser entre " + min + " y " + max);
+                System.out.print("Vuelve a intentarlo: ");
             }
         } while (valor < min || valor > max);
 
         return valor;
     }
 
-    // Te muestra los contactos
-    public static void verContactos() {
-
-        comprobarContacto();
-
+    // Pide al usuario un texto y lo devuelve
+    public static String pedirString() {
+        Scanner in = new Scanner(System.in);
+        return in.nextLine();
     }
 
-// Añades un contacto
-    public static void añadirContacto() {
+    /**
+     * FUNCIONES DE MOSTRAR CONTACTOS
+     */
 
-        pedirDatos();
-
+    // Muestra la información solo del contacto 'pos' (índice de los vectores) 
+    public static void verContactoPos(int pos) {
+        System.out.println(pos + ". " + nombre[pos] + " - " + tlf[pos] + " - " + correo[pos] );
+    }
+    
+    // Muestra la información de todos los contactos
+    public static void verContactosTodos() {
+        for (int i = 0; i < contar; i++) {
+            verContactoPos(i);
+        }
+    }
+    
+    // Muestra la información de los contactos indicados en 'vpos' (vector de posiciones)
+    public static void verContactosVector(int[] vpos) {
+        for (int i = 0; i < vpos.length; i++) {
+            verContactoPos(vpos[i]);
+        }
     }
 
-// Eliminas un contacto
-    public static void eliminarContacto() {
-
-        pedirPosicion();
-        actualizaContacto();
-
-    }
-
-// Buscar contacto por nombre
-    public static void buscarNombre() {
-
-        PedirString();
-        buscarContacto(nombre[], N)
-    }
-
-// Buscar contacto por telefono
-    public static void buscarTelefono() {
-
-        PedirString();
-        buscarContacto(tlf[], N);
-    }
-
-// Buscar contacto por correo
-    public static void buscarCorreo() {
-
-        PedirString();
-        buscarContacto(mail[], N);
-    }
-
-// Buscar contacto en general
-    public static void buscarGlobal() {
-
-        PedirString();
-        buscarContacto(nombre[], N);
-        buscarContacto(tlf[], N);
-        buscarContacto(mail[], N);
-    }
-
-// Comprueba si hay contactos y lo muestra
-    public static void comprobarContacto() {
-
-        if (contar > 0) {
-            for (int i = 0; i < contar; i++) {
-                System.out.println("Nombre: " + nombre[i]);
-                System.out.println("Teléfono: " + tlf[i]);
-                System.out.println("Mail: " + mail[i]);
-                System.out.println("");
-            }
+    /**
+     * FUNCIONES DE AGREGAR Y ELIMINAR CONTACTOS
+     */
+    
+    // Añade a los vectores la información de un contacto nuevo (n, t, c)
+    public static void agregarContacto(String n, String t, String c) {
+        if (contar < MAX) {
+            nombre[contar] = n;
+            tlf[contar] = t;
+            correo[contar] = c;
+            contar++;
         } else {
-            System.out.println("No hay contactos\n");
+            System.out.println("ERROR: No se puede agregar contacto. Lista llena.");
         }
     }
 
-// Comprueba si la lista esta llena
-    public static void comprobarLlena() {
-
-    }
-
-// Pide los datos a añadir
-    public static void pedirDatos() {
-
-        Scanner in = new Scanner(System.in);
-        in.nextLine();
-
-        int contar;
-
-        System.out.print("Nombre: ");
-        nombre[contar] = in.nextLine();
-
-        System.out.print("Teléfono: ");
-        tlf[contar] = in.nextInt();
-        in.nextLine();
-
-        System.out.print("Mail: ");
-        mail[contar] = in.nextLine();
-
-        System.out.println("");
-        contar++;
-
-    }
-
-// Almacena el contacto añadido
-    public static void almacenContacto() {
-        
-        int contar++;
-        
-    }
-
-// Comprueba si el contacto existe
-    public static void comprobarExiste() {
-
-    }
-
-// Pedir posición del contacto
-    public static void pedirPosicion() {
-
-        Scanner in = new Scanner(System.in);
-
-        System.out.print("¿Qué contacto desea eliminar? (Indique la posición)");
-        int borrar = in.nextInt();
-        System.out.println("");
-
-    }
-
-// Comprueba si la posición está vacia
-    public static void comprobarPosicion() {
-
-    }
-
-// Comprueba si la posición existe
-    public static void comprobarExistePosicion() {
-
-    }
-
-// Elimina el contacto y actualiza los vectores
-    public static void actualizaContacto() {
-
-        for (int i = borrar + 1; i < contar; i++) {
-            nombre[i - 1] = nombre[i];
-            tlf[i - 1] = tlf[i];
-            mail[i - 1] = mail[i];
+    // Elimina de los vectores el contacto en la posición 'pos'
+    public static void eliminarContacto(int pos) {
+        if (pos >= 0 && pos < contar) {
+            eliminarPosDeVector(nombre, pos);
+            eliminarPosDeVector(tlf, pos);
+            eliminarPosDeVector(correo, pos);
+            contar--;
+        } else {
+            System.out.println("ERROR: No se puede eliminar contacto. Posición fuera de rango.");
         }
-        contar--;
-
     }
 
-// Pedir nombre, telefono o mail
-    public static void PedirString() {
-
-        Scanner in = new Scanner(System.in);
-
-        System.out.print("Escriba lo desea buscar? ");
-        String texto = in.nextLine();
-
+    // Elimina la posición 'pos' de 'vector' (mueve todos los elementos >pos una posición a la izquierda)
+    public static void eliminarPosDeVector(String[] vector, int pos) {
+        for (int i = pos; i < (contar-1); i++) {
+            vector[i] = vector[i+1];
+        }
     }
 
-// Buscar contacto
-    public static int[] buscarContacto(String[] vector, String texto) {
-
-        boolean buscar = false;
-
+    /**
+     * FUNCIONES DE BUSCAR CONTACTOS
+     */
+    
+    // Busca en 'vector' los String que contienen 'buscar'
+    // Devuelve un vector con las posiciones en las que se ha encontrado
+    public static int[] buscarContactos(String[] vector, String buscar) {
+        
+        // Vector donde guardaremos las posiciones encontradas
+        int[] vpos = new int[MAX];
+        // Nº de posiciones encontradas
+        int npos = 0;
+        
+        // Recorremos 'vector' buscando el texto 'buscar' en sus posiciones
+        // Guardaremos en 'vpos' las posiciones que contengan 'buscar'
         for (int i = 0; i < contar; i++) {
-            if (vector[i].indexOf(texto) >= 0) {
-                System.out.println("Nombre: " + nombre[i]);
-                System.out.println("Teléfono: " + tlf[i]);
-                System.out.println("Mail: " + mail[i]);
-                System.out.println("");
-                buscar = true;
+            if (vector[i].toUpperCase().contains(buscar.toUpperCase())) {
+                vpos[npos] = i;
+                npos++;
             }
         }
-        if (buscar == false) {
-            System.out.println("No se han encontrado contactos");
-            System.out.println("");
-        }
-
-        return vector[];
+        
+        // Reducimod el tamaño de 'vpos' al mínimo y lo devolvemos
+        vpos = Arrays.copyOf(vpos, npos);
+        
+        return vpos;
     }
 
-// Mostrar contacto
-    public static void mostrarContacto() {
-
-        int MAX = 100;
-        String[] nombre = new String[MAX];
-        String[] tlf = new String[MAX];
-        String[] mail = new String[MAX];
-
-        int contar;
-
+    // Busca en 'vn', 'vt' y 'vc' los String que contienen 'buscar'
+    // Devuelve las posiciones en las que se ha encontrado
+    public static int[] buscarGlobal(String buscar) {
+        
+        // NOTA: Sería más modular si reutilizamos buscarContactos(), pero
+        // tendríamos 3 vectores de posiciones con números repetidos. Habría
+        // que unirlos en un solo vector, ordenarlo y eliminar repetidos :S
+        // Se puede hacer usando una colección Set, pero aún no lo hemos visto.
+        
+        //int[] vposn = buscarContactos(vn, buscar);
+        //int[] vpost = buscarContactos(vt, buscar);
+        //int[] vposc = buscarContactos(vc, buscar);
+        
+        // Vector donde guardaremos las posiciones encontradas
+        int[] vpos = new int[MAX];
+        // Nº de posiciones encontradas
+        int npos = 0;
+        
+        // Recorremos los vectores buscando el texto 'buscar' en sus posiciones
+        // Guardaremos en 'vpos' las posiciones que contengan 'buscar'
         for (int i = 0; i < contar; i++) {
-            System.out.println("Nombre: " + nombre[i]);
-            System.out.println("Teléfono: " + tlf[i]);
-            System.out.println("Mail: " + mail[i]);
-            System.out.println("");
+            // Comprobamos
+            boolean encontradoN = nombre[i].toUpperCase().contains(buscar.toUpperCase());
+            boolean encontradoT = tlf[i].toUpperCase().contains(buscar.toUpperCase());
+            boolean encontradoC = correo[i].toUpperCase().contains(buscar.toUpperCase());
+            if (encontradoN || encontradoT || encontradoC) {
+                vpos[npos] = i;
+                npos++;
+            }
         }
+        
+        // Reducimos el tamaño de 'vpos' al mínimo y lo devolvemos
+        vpos = Arrays.copyOf(vpos, npos);
+        return vpos;
+        
     }
-
 }
