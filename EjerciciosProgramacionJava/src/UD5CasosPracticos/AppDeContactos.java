@@ -55,29 +55,26 @@ public class AppDeContactos {
                 case 3:
                     // Eliminar contacto
                     System.out.print("¿ID de contacto a eliminar? ");
-                    pos = pedirIntEnRango(0, contar-1);
-                    eliminarContacto(pos);
+                    opcion = pedirIntEnRango(0, contar-1);
+                    eliminarContacto(opcion);
                     break;
                 case 4:
                     // Buscar por nombre
                     System.out.print("¿Nombre? ");
                     buscar = pedirString();
-                    vpos = buscarContactos(nombre, buscar);
-                    verContactosVector(vpos);
+                    buscarContactos(nombre, buscar);
                     break;
                 case 5:
                     // Buscar por teléfono
                     System.out.print("¿Teléfono? ");
                     buscar = pedirString();
-                    vpos = buscarContactos(tlf, buscar);
-                    verContactosVector(vpos);
+                    buscarContactos(tlf, buscar);
                     break;
                 case 6:
                     // Buscar por correo
                     System.out.print("¿Correo? ");
                     buscar = pedirString();
-                    vpos = buscarContactos(correo, buscar);
-                    verContactosVector(vpos);
+                    buscarContactos(correo, buscar);
                     break;
                 case 7:
                     // Búsqueda global
@@ -184,15 +181,14 @@ public class AppDeContactos {
     }
 
     // Elimina de los vectores el contacto en la posición 'pos'
-    public static void eliminarContacto(int pos) {
-        if (pos >= 0 && pos < contar) {
-            eliminarPosDeVector(nombre, pos);
-            eliminarPosDeVector(tlf, pos);
-            eliminarPosDeVector(correo, pos);
-            contar--;
-        } else {
-            System.out.println("ERROR: No se puede eliminar contacto. Posición fuera de rango.");
+    public static void eliminarContacto(int opcion) {
+        
+        for (int i = opcion + 1; i < contar; i++) {
+            nombre[i - 1] = nombre[i];
+            tlf[i - 1] = tlf[i];
+            correo[i - 1] = correo[i];
         }
+        contar--;
     }
 
     // Elimina la posición 'pos' de 'vector' (mueve todos los elementos >pos una posición a la izquierda)
@@ -208,40 +204,27 @@ public class AppDeContactos {
     
     // Busca en 'vector' los String que contienen 'buscar'
     // Devuelve un vector con las posiciones en las que se ha encontrado
-    public static int[] buscarContactos(String[] vector, String buscar) {
+    public static void buscarContactos(String[] vector, String N) {
         
-        // Vector donde guardaremos las posiciones encontradas
-        int[] vpos = new int[MAX];
-        // Nº de posiciones encontradas
-        int npos = 0;
-        
-        // Recorremos 'vector' buscando el texto 'buscar' en sus posiciones
-        // Guardaremos en 'vpos' las posiciones que contengan 'buscar'
+        boolean buscar = false;
+
+        System.out.println("");
+
         for (int i = 0; i < contar; i++) {
-            if (vector[i].toUpperCase().contains(buscar.toUpperCase())) {
-                vpos[npos] = i;
-                npos++;
+            if (vector[i].indexOf(N) >= 0) {
+                verContactosTodos();
+                buscar = true;
             }
         }
-        
-        // Reducimod el tamaño de 'vpos' al mínimo y lo devolvemos
-        vpos = Arrays.copyOf(vpos, npos);
-        
-        return vpos;
+        if (buscar == false) {
+            System.out.println("No se ha encontrado la cuenta");
+            System.out.println("");
+        }
     }
 
     // Busca en 'vn', 'vt' y 'vc' los String que contienen 'buscar'
     // Devuelve las posiciones en las que se ha encontrado
     public static int[] buscarGlobal(String buscar) {
-        
-        // NOTA: Sería más modular si reutilizamos buscarContactos(), pero
-        // tendríamos 3 vectores de posiciones con números repetidos. Habría
-        // que unirlos en un solo vector, ordenarlo y eliminar repetidos :S
-        // Se puede hacer usando una colección Set, pero aún no lo hemos visto.
-        
-        //int[] vposn = buscarContactos(vn, buscar);
-        //int[] vpost = buscarContactos(vt, buscar);
-        //int[] vposc = buscarContactos(vc, buscar);
         
         // Vector donde guardaremos las posiciones encontradas
         int[] vpos = new int[MAX];
@@ -264,6 +247,5 @@ public class AppDeContactos {
         // Reducimos el tamaño de 'vpos' al mínimo y lo devolvemos
         vpos = Arrays.copyOf(vpos, npos);
         return vpos;
-        
     }
 }
