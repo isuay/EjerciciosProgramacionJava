@@ -7,7 +7,6 @@ public class Punto {
     public Punto(int x, int y) {
         this.x = x;
         this.y = y;
-        imprime();
     }
 
     public int getX() {
@@ -45,7 +44,9 @@ public class Punto {
     }
 
     public static Punto creaPuntoAleatorio() {
-        Punto p1 = new Punto((int)(Math.random()*(100-(-100))+(-100)), (int)(Math.random()*(100-(-100))+(-100)));
+        int x = (int)(Math.random()*(100-(-100))+(-100));
+        int y = (int)(Math.random()*(100-(-100))+(-100));
+        Punto p1 = new Punto(x,y);
         return p1;
     }
 }

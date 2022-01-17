@@ -10,8 +10,11 @@ public class Main {
         
         Punto p3 = new Punto(-3,7);
         
-        System.out.println("Distancia: " + p1.distancia(p3));
+        Punto p4 = Punto.creaPuntoAleatorio();
         
-        System.out.println(Punto.creaPuntoAleatorio());
+        p1.imprime();
+        p3.imprime();
+        System.out.println("Distancia: " + p1.distancia(p3));
+        System.out.println("(" + p4.getX() + "," + p4.getY() + ")");
     }
 }
