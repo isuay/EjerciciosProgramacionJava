@@ -16,12 +16,7 @@ public class Main {
         //r2.x2 = 2;
         //r2.y2 = 3;
 
-
-        System.out.println("Perímetro r1: " + r1.perimetro());
-        System.out.println("Perímetro r2: " + r2.perimetro());
-
-        System.out.println("Área r1: " + r1.area());
-        System.out.println("Área r2: " + r2.area());
-
+        System.out.println(Rectangulo.creaRectanguloAleatorio());
+        
     }
 }

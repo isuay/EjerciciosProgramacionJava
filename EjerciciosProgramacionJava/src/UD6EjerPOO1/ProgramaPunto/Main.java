@@ -11,5 +11,7 @@ public class Main {
         Punto p3 = new Punto(-3,7);
         
         System.out.println("Distancia: " + p1.distancia(p3));
+        
+        System.out.println(Punto.creaPuntoAleatorio());
     }
 }

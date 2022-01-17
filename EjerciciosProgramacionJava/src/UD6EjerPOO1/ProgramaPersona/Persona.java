@@ -2,10 +2,11 @@ package UD6EjerPOO1.ProgramaPersona;
 
 public class Persona {
 
-    private String dni;
+    private final String dni;
     private String nombre;
     private String apellidos;
     private int edad;
+    private static final int mayoriaEdad = 18;
 
     public Persona(String n, String a, String d, int e) {
         nombre = n;
@@ -31,10 +32,6 @@ public class Persona {
         return edad;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -48,7 +45,7 @@ public class Persona {
     }
 
     public boolean esMayorEdad(int e) {
-        if (e >= 18) {
+        if (e >= mayoriaEdad) {
             return true;
         } else {
             return false;
@@ -62,10 +59,10 @@ public class Persona {
             return false;
         }
     }
-    
+
     public int diferenciaEdad(Persona p) {
         int dif = 0;
-        
+
         if (this.edad > p.edad) {
             dif = this.edad - p.edad;
         } else {
@@ -87,4 +84,20 @@ public class Persona {
             System.out.println(" y no está jubilado");
         }
     }
+
+    static boolean validarDNI(String dni) {
+        String num = dni.substring(0, (dni.length() - 1));
+        int numeros;
+        if (dni.length() == 9) {
+            try {
+                numeros = Integer.parseInt(num);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
 }
