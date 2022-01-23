@@ -9,14 +9,17 @@ public class Main {
         //Scanner
         Scanner in = new Scanner(System.in);
 
+        //Creamos el vector
         Reloj[] relojes = new Reloj[5];
 
+        //Inicializamos los vectores
         relojes[0] = new Reloj(23, 0, 56);
         relojes[1] = new Reloj(16, 20, 39);
         relojes[2] = new Reloj(3, 37, 12);
         relojes[3] = new Reloj(9, 48, 02);
         relojes[4] = new Reloj(12, 58, 47);
 
+        //Sumamos 1 segundo a cada reloj
         System.out.println("1 tick en cada reloj\n");
 
         for (int i = 0; i < relojes.length; i++) {
@@ -26,6 +29,7 @@ public class Main {
             System.out.println("-----------");
         }
 
+        //Sumamos 1 minuto a cada reloj
         System.out.println("\n60 ticks en cada reloj\n");
 
         for (int i = 0; i < relojes.length; i++) {
@@ -37,6 +41,7 @@ public class Main {
             System.out.println("-----------");
         }
 
+        //Sumamos 1 hora a cada reloj
         System.out.println("\nPasar 1 hora\n");
 
         for (int i = 0; i < relojes.length; i++) {
@@ -47,6 +52,7 @@ public class Main {
             System.out.println("-----------");
         }
 
+        //Sumamos s segundos a cada reloj
         System.out.println("Pasar x segundos");
 
         System.out.print("Segundos: ");

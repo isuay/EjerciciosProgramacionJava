@@ -91,6 +91,7 @@ public class Reloj {
         }
     }
 
+    //Método para que el usuario elija la cantidad de segundos que quiere que pasen
     public void tick(int s) {
         segundos += s;
         if (segundos >= 60) {

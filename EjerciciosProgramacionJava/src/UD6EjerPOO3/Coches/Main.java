@@ -15,27 +15,36 @@ public class Main {
         //Contadores
         int contPintura = 0, contFabric = 0, contTerceros = 0, contTodoRiesgo = 0;
 
+        //Pedimos todo los datos de cada coche
         for (int i = 0; i < coche.length; i++) {
             System.out.print("Modelo: ");
             String modelo = in.nextLine();
+            
             System.out.print("Color: ");
             String color = in.nextLine();
+            
             System.out.print("Tiene la pintura metralizada(true/false): ");
             boolean pintura = in.nextBoolean();
+            
             in.nextLine();
             System.out.print("Matricula: ");
             String matricula = in.nextLine();
+            
             System.out.print("Año fabricación: ");
             int fabricacion = in.nextInt();
+            
             in.nextLine();
             System.out.print("Tipo de coche: ");
             String tipo = in.nextLine();
+            
             System.out.print("Modalida de seguro: ");
             String seguro = in.nextLine();
 
+            //Transformamos el String de tipo y seguro para que sea un enum y lo pasamos a mayúscula
             Coches.tipoCoche t = Coches.tipoCoche.valueOf(tipo.toUpperCase());
             Coches.modalidadSeguro s = Coches.modalidadSeguro.valueOf(seguro.toUpperCase());
 
+            //Hacemos las comprobaciones
             if (pintura == true) {
                 contPintura++;
             }
