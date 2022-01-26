@@ -6,6 +6,8 @@ public class Agenda {
 
     private Contacto[] contactos;
     private int cuantos;
+    private int[] pos = new int[100];
+    private int buscar = 0;
 
     public Agenda() {
         contactos = new Contacto[100];
@@ -33,24 +35,39 @@ public class Agenda {
     }
 
     public int[] buscarContacto(String nombre) {
-        int[] vp = new int[100];
-        int npos = 0;
-        
+
+        buscar = 0;
+
         for (int i = 0; i < cuantos; i++) {
-            if (contactos[i].getNombre().equalsIgnoreCase(nombre)) {
-                vp[npos] = i;
-                npos++;
+            if (contactos[i].getNombre().toUpperCase().indexOf(nombre.toUpperCase()) != -1) {
+                pos[buscar] = i;
+                buscar++;
             }
         }
-        
-        vp = Arrays.copyOf(vp, npos);
-        
-        return vp;
+        if (buscar == 0) {
+            System.err.println("No hay contactos con ese nombre");
+        }
+        return pos;
+    }
+
+    public String getContacto(int posicion) {
+        return contactos[posicion - 1].getNombre() + " " + contactos[posicion - 1].getTelefono() + " " + contactos[posicion - 1].getCorreo();
+    }
+
+    public void imprimirBuscar(int[] pos) {
+        for (int i = 0; i < buscar; i++) {
+            System.out.println(getContacto(pos[i] + 1));
+        }
     }
 
     public void imprimirTodos() {
-        for (int i = 0; i < cuantos; i++) {
-            contactos[i].imprimir();
+        if (cuantos == 0) {
+            System.err.println("No hay contactos");
+        } else {
+            for (int i = 0; i < cuantos; i++) {
+                System.out.print(i + ". ");
+                contactos[i].imprimir();
+            }
         }
     }
 
