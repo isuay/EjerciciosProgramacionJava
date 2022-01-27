@@ -1,7 +1,5 @@
 package UD6CasoPractico1;
 
-import java.util.Arrays;
-
 public class Agenda {
 
     private Contacto[] contactos;
