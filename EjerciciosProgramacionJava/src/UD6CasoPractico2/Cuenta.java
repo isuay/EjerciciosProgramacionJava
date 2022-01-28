@@ -41,7 +41,7 @@ public class Cuenta {
     }
     
     public void imprimir(){
-        System.out.println(nombre + " Saldo: " + saldo + "€");
+        System.out.println(nombre + "   Saldo: " + saldo + "€");
     }
     
 }

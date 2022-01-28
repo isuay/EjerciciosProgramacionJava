@@ -12,7 +12,11 @@ public class Banco {
     }
 
     public void ingresarDinero(int posCuenta, double dinero) {
-        cuentas[posCuenta].ingresarDinero(dinero);
+        if (cuantos > 0) {
+            cuentas[posCuenta].ingresarDinero(dinero);
+        } else {
+            System.err.println("No hay cuentas\n");
+        }
     }
 
     public void retirarDinero(int posCuenta, double dinero) {
@@ -26,11 +30,11 @@ public class Banco {
     }
 
     public void agregarCuenta(Cuenta c) {
-        if (cuantos < 100) {
+        if (cuantos < MAX) {
             cuentas[cuantos] = c;
             cuantos++;
         } else {
-            System.err.println("Banco lleno");
+            System.err.println("Banco lleno\n");
         }
     }
 
@@ -40,13 +44,11 @@ public class Banco {
                 cuentas[i] = cuentas[i + 1];
             }
             cuantos--;
-        } else {
-            System.err.println("No hay contactos");
         }
     }
 
     public int[] buscarCuenta(String nombre) {
-        int[] pos = new int[100];
+        int[] pos = new int[MAX];
         buscar = 0;
 
         for (int i = 0;
@@ -59,13 +61,13 @@ public class Banco {
         }
         if (buscar
                 == 0) {
-            System.err.println("No hay cuentas con ese nombre");
+            System.err.println("No hay cuentas con ese nombre\n");
         }
         return pos;
     }
 
     public String getCuenta(int posicion) {
-        return cuentas[posicion - 1].getNombre() + " " + cuentas[posicion - 1].getsaldo();
+        return posicion - 1 + ". " + cuentas[posicion - 1].getNombre() + "  Saldo: " + cuentas[posicion - 1].getsaldo();
     }
 
     public void imprimirBuscarCuenta(int[] pos) {
@@ -75,25 +77,27 @@ public class Banco {
     }
 
     public void mostrarMorosos() {
-        for (int i = 0; i < cuentas.length; i++) {
+        int neg = 0;
+        for (int i = 0; i < cuantos; i++) {
             if (cuentas[i].getsaldo() < 0) {
                 System.out.print(i + ". ");
                 cuentas[i].imprimir();
-            } else {
-                System.out.println("No hay cuentas en negativo");
+                neg++;
+            } 
+            if(neg == 0) {
+                System.out.println("No hay cuentas en negativo\n");
             }
         }
     }
 
     public void imprimirTodos() {
         if (cuantos == 0) {
-            System.err.println("No hay contactos");
+            System.err.println("No hay cuentas\n");
         } else {
-            for (int i = 0; i < cuentas.length; i++) {
+            for (int i = 0; i < cuantos; i++) {
                 System.out.print(i + ". ");
                 cuentas[i].imprimir();
             }
         }
     }
-
 }
