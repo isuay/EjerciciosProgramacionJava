@@ -15,6 +15,7 @@ public class Ejer11 {
             int n = (int) (Math.random() * (10 - 1) + 1);
             vector[i] = n;
         }
+        System.out.println("El tamaño del vector es: " + (t-1));
 
         do {
             try {
@@ -22,10 +23,10 @@ public class Ejer11 {
                 num = in.nextInt();
                 System.out.println("Número: " + vector[num]);
             } catch (InputMismatchException e1) {
-                System.out.println("Valor introducido incorrecto");
+                System.err.println("Valor introducido incorrecto");
                 in.nextLine();
             } catch (IndexOutOfBoundsException e2) {
-                System.out.println("Valor fuera de rango");
+                System.err.println("Valor fuera de rango");
                 in.nextLine();
             }
         } while (num >= 0);

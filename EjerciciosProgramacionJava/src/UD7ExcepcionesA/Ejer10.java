@@ -9,12 +9,13 @@ public class Ejer10 {
         Scanner in = new Scanner(System.in);
         double[] vector = new double[5];
         
-        for (int i = 0; i < vector.length; i++) {
+        for (int i = 0; i < 5; i++) {
             try {
                 System.out.print("Dame un valor: ");
                 vector[i] = in.nextDouble();
             } catch (InputMismatchException e1) {
                 System.out.println("Valor introducido incorrecto");
+                i--;
                 in.nextLine();
             }
         }
