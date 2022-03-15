@@ -19,32 +19,27 @@ public class MiniFileManager {
         
     }*/
     /**
-     * Indica la ruta en la que estás
+     * Indica la ruta en la que estás.
      *
-     * @return Devuelve la ruta en la que estás actualmente
+     * @return Devuelve la ruta en la que estás actualmente.
      */
     public String getPDW() {
         return inicio.getAbsolutePath();
     }
 
     /**
-     * Cambia el directorio actual al que le indiques
+     * Cambia el directorio actual al dir.
      *
-     * @param dir Directorio al cual quieres cambiar
-     * @return Devuelve true si se ha podido cambiar o false en caso contrario
+     * @param dir Ruta o directorio al cual quieres cambiar.
+     * @return Devuelve true si se ha podido cambiar o false en caso contrario.
      */
     public boolean changeDir(String dir) {
-
         if (dir.equals("..")) {
-
-            String rutaAbsoluta = inicio.getAbsolutePath();
-            ruta = rutaAbsoluta.substring(0, rutaAbsoluta.lastIndexOf("/"));
+            ruta = inicio.getParent();
             inicio = new File(ruta);
             return true;
         } else if (dir.startsWith("/")) {
-
             auxiliar = new File(dir);
-
             if (auxiliar.exists()) {
                 inicio = new File(dir);
                 return true;
@@ -53,10 +48,8 @@ public class MiniFileManager {
                 return false;
             }
         } else if (!dir.startsWith("/")) {
-
             ruta = inicio.getAbsolutePath() + "/" + dir;
             auxiliar = new File(ruta);
-
             if (auxiliar.exists()) {
                 inicio = new File(ruta);
                 return true;
@@ -70,10 +63,10 @@ public class MiniFileManager {
     }
 
     /**
-     * Imprime todos los directorios y/o archivos de la carpeta actual
+     * Imprime todos los directorios y/o archivos de la carpeta actual.
      *
      * @param info Valor que indica si queremos mostrar el tamaño y fecha de
-     * modificación de los directorios y/o archivos
+     * modificación de los directorios y/o archivos.
      */
     public void printList(boolean info) {
 
@@ -99,15 +92,25 @@ public class MiniFileManager {
         }
     }
 
+    /**
+     * Crea el directorio dir.
+     *
+     * @param dir Directorio que quieres crear.
+     * @return Devuelve true si se ha podido crear o false en caso contrario.
+     */
     public boolean mkdir(String dir) {
         ruta = inicio.getAbsolutePath() + "/" + dir;
         if (dir.startsWith("/")) {
-            ruta = dir;
-            String rutaAbsoluta = inicio.getAbsolutePath();
-            String r = rutaAbsoluta.substring(0, ruta.lastIndexOf("/"));
+            //ruta = dir;
+            //String rutaAbsoluta = inicio.getAbsolutePath();
+            //String r = rutaAbsoluta.substring(0, ruta.lastIndexOf("/"));
+            //auxiliar = new File(r);
+            auxiliar = new File(dir);
+            String r = auxiliar.getParent();
+            ruta = auxiliar.getName();
             auxiliar = new File(r);
             if (auxiliar.exists()) {
-                inicio = new File(ruta);
+                inicio = new File(dir);
                 return inicio.mkdir();
             } else {
                 System.err.println("No existe la ruta indicada");
@@ -119,11 +122,35 @@ public class MiniFileManager {
         }
     }
 
-    /*public boolean removeFile() {
-
-    }
-    
-    public void help(){
+    /**
+     * Elimina un archivo o directorio.
+     *
+     * @param nombre Nombre del archivo o directorio.
+     * @return Devuelve true si se ha podido eliminar o false en caso contrario
+     */
+    public boolean removeFile(String nombre) {
+        ruta = inicio.getAbsolutePath() + "/" + nombre;
+        if (nombre.startsWith("/")) {
+            ruta = nombre;
+            System.out.println(ruta);
+            String r = ruta.substring(ruta.length(), ruta.lastIndexOf("/"));
+            System.out.println(r);
+            /*auxiliar = new File(r);
+            if (auxiliar.exists()) {
+                inicio = new File(ruta);
+                return inicio.mkdir();
+            } else {
+                System.err.println("No existe la ruta indicada");
+                return inicio.mkdir();
+            }
+        } else {
+            inicio = new File(ruta);
+            return inicio.mkdir();
+        }*/
+        }
+        return true;
+        /*public void help(){
     
     }*/
+    }
 }
