@@ -39,11 +39,12 @@ public class MiniTerminal {
                     terminal.mkdir(opcion[1]);
                     break;
                 case "rm":
-                    terminal.removeFile(opcion[1]);
+                    //terminal.removeFile(opcion[1]);
                     break;
                 case "mv":
                     break;
                 case "help":
+                    terminal.help();
                     break;
                 case "exit":
                     exit = true;

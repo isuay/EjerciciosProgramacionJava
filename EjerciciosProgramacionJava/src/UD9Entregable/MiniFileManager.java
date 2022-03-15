@@ -34,8 +34,9 @@ public class MiniFileManager {
      * @return Devuelve true si se ha podido cambiar o false en caso contrario.
      */
     public boolean changeDir(String dir) {
+        String rutaAbsoluta = inicio.getAbsolutePath();
         if (dir.equals("..")) {
-            ruta = inicio.getParent();
+            ruta = rutaAbsoluta.substring(0, rutaAbsoluta.lastIndexOf("/"));
             inicio = new File(ruta);
             return true;
         } else if (dir.startsWith("/")) {
@@ -128,7 +129,7 @@ public class MiniFileManager {
      * @param nombre Nombre del archivo o directorio.
      * @return Devuelve true si se ha podido eliminar o false en caso contrario
      */
-    public boolean removeFile(String nombre) {
+    /*public boolean removeFile(String nombre) {
         ruta = inicio.getAbsolutePath() + "/" + nombre;
         if (nombre.startsWith("/")) {
             ruta = nombre;
@@ -146,11 +147,20 @@ public class MiniFileManager {
         } else {
             inicio = new File(ruta);
             return inicio.mkdir();
-        }*/
+        }
         }
         return true;
-        /*public void help(){
-    
     }*/
+
+    public void help() {
+        System.out.println("pwd​: Muestra cual es la carpeta actual.\n"
+                + "cd <DIR>​: Cambia la carpeta actual a ‘DIR’. Con .. cambia a la carpeta superior.\n"
+                + "ls​: Muestra la lista de directorios y archivos de la carpeta actual (primero directorios, luego archivos, ambos ordenados alfabéticamente).\n"
+                + "ll​: Como ls pero muestra también el tamaño y la fecha de última modificación.\n"
+                + "mkdir <DIR>​: Crea el directorio ‘DIR’ en la carpeta actual.\n"
+                + "rm <FILE>​: Borra ‘FILE’. Si es una carpeta, borrará primero sus archivos y luego la carpeta. Si tiene subcarpetas, las dejará intactas y mostrará un aviso al usuario.\n"
+                + "mv <FILE1> <FILE2>​: Mueve o renombra ‘FILE1’ a ‘FILE2’.\n"
+                + "help​: Muestra una breve ayuda con los comandos disponibles.\n"
+                + "exit​: Termina el programa.");
     }
 }
