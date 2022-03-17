@@ -8,7 +8,7 @@ package UD3StarWars;
 import java.util.Scanner;
 import java.lang.Math;
 
-/**
+/*
  *
  * @author Iris Suay <irisau2@gmail.com>
  * @version 1.0

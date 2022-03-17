@@ -15,11 +15,8 @@ public class MiniFileManager {
     private File inicio = new File("");
     private File auxiliar;
 
-    /*public File getCurrentPath() {
-        
-    }*/
     /**
-     * Indica la ruta en la que estás.
+     * Muestra cual es la carpeta actual.
      *
      * @return Devuelve la ruta en la que estás actualmente.
      */
@@ -28,7 +25,7 @@ public class MiniFileManager {
     }
 
     /**
-     * Cambia el directorio actual al dir.
+     * Cambia el directorio actual a 'dir'.
      *
      * @param dir Ruta o directorio al cual quieres cambiar.
      * @return Devuelve true si se ha podido cambiar o false en caso contrario.
@@ -66,35 +63,44 @@ public class MiniFileManager {
     /**
      * Imprime todos los directorios y/o archivos de la carpeta actual.
      *
-     * @param info Valor que indica si queremos mostrar el tamaño y fecha de
-     * modificación de los directorios y/o archivos.
+     * @param info Indica si queremos mostrar el tamaño y fecha de modificación
+     * de los directorios y/o archivos.
      */
     public void printList(boolean info) {
 
-        File[] lista = inicio.listFiles();
-        Arrays.sort(lista);
-
-        if (info) {
-            for (int i = 0; i < lista.length; i++) {
-                if (lista[i].isDirectory()) {
-                    System.out.println("[*] " + lista[i].getName() + "\tTamaño: " + lista[i].length() + "\tÚltima fecha de modificación: " + lista[i].lastModified());
-                } else {
-                    System.out.println("[A] " + lista[i].getName() + "\tTamaño: " + lista[i].length() + "\tÚltima fecha de modificación: " + lista[i].lastModified());
-                }
+        if (inicio.isFile()) {
+            if (info) {
+                System.out.println("[A] " + inicio.getName() + "\tTamaño (bytes): " + inicio.length() + "\tÚltima fecha de modificación: " + inicio.lastModified());
+            } else {
+                System.out.println("[A] " + inicio.getName());
             }
         } else {
+            inicio = new File(getPDW());
+            File[] lista = inicio.listFiles();
+            Arrays.sort(lista);
             for (int i = 0; i < lista.length; i++) {
                 if (lista[i].isDirectory()) {
-                    System.out.println("[*] " + lista[i].getName());
-                } else {
-                    System.out.println("[A] " + lista[i].getName());
+                    if (info) {
+                        System.out.println("[A] " + lista[i].getName() + "\tTamaño (bytes): " + lista[i].length() + "\tÚltima fecha de modificación: " + lista[i].lastModified());
+                    } else {
+                        System.out.println("[*] " + lista[i].getName());
+                    }
+                }
+            }
+            for (int i = 0; i < lista.length; i++) {
+                if (lista[i].isFile()) {
+                    if (info) {
+                        System.out.println("[A] " + lista[i].getName() + "\tTamaño (bytes): " + lista[i].length() + "\tÚltima fecha de modificación: " + lista[i].lastModified());
+                    } else {
+                        System.out.println("[A] " + lista[i].getName());
+                    }
                 }
             }
         }
     }
 
     /**
-     * Crea el directorio dir.
+     * Crea el directorio 'dir'.
      *
      * @param dir Directorio que quieres crear.
      * @return Devuelve true si se ha podido crear o false en caso contrario.
@@ -102,56 +108,99 @@ public class MiniFileManager {
     public boolean mkdir(String dir) {
         ruta = inicio.getAbsolutePath() + "/" + dir;
         if (dir.startsWith("/")) {
-            //ruta = dir;
-            //String rutaAbsoluta = inicio.getAbsolutePath();
-            //String r = rutaAbsoluta.substring(0, ruta.lastIndexOf("/"));
-            //auxiliar = new File(r);
             auxiliar = new File(dir);
             String r = auxiliar.getParent();
             ruta = auxiliar.getName();
             auxiliar = new File(r);
             if (auxiliar.exists()) {
-                inicio = new File(dir);
-                return inicio.mkdir();
+                auxiliar = new File(dir);
+                return auxiliar.mkdir();
             } else {
                 System.err.println("No existe la ruta indicada");
-                return inicio.mkdir();
+                return auxiliar.mkdir();
             }
         } else {
-            inicio = new File(ruta);
-            return inicio.mkdir();
+            auxiliar = new File(ruta);
+            return auxiliar.mkdir();
         }
     }
 
     /**
      * Elimina un archivo o directorio.
      *
-     * @param nombre Nombre del archivo o directorio.
+     * @param dir Nombre del archivo o directorio.
      * @return Devuelve true si se ha podido eliminar o false en caso contrario
      */
-    /*public boolean removeFile(String nombre) {
-        ruta = inicio.getAbsolutePath() + "/" + nombre;
-        if (nombre.startsWith("/")) {
-            ruta = nombre;
-            System.out.println(ruta);
-            String r = ruta.substring(ruta.length(), ruta.lastIndexOf("/"));
-            System.out.println(r);
-            /*auxiliar = new File(r);
+    public boolean removeFile(String dir) {
+        ruta = inicio.getAbsolutePath() + "/" + dir;
+        if (dir.startsWith("/")) {
+            auxiliar = new File(dir);
+            String r = auxiliar.getParent();
+            ruta = auxiliar.getName();
+            auxiliar = new File(r);
             if (auxiliar.exists()) {
-                inicio = new File(ruta);
-                return inicio.mkdir();
+                auxiliar = new File(dir);
+                if (auxiliar.isDirectory()) {
+                    File[] lista = auxiliar.listFiles();
+                    for (int i = 0; i < lista.length; i++) {
+                        if (lista[i].isFile()) {
+                            lista[i].delete();
+                        } else {
+                            System.err.println("No se puede borrar la subcarpeta");
+                        }
+                    }
+                }
             } else {
                 System.err.println("No existe la ruta indicada");
-                return inicio.mkdir();
             }
+            return auxiliar.delete();
         } else {
-            inicio = new File(ruta);
-            return inicio.mkdir();
+            auxiliar = new File(ruta);
+            if (auxiliar.isDirectory()) {
+                File[] lista = auxiliar.listFiles();
+                for (int i = 0; i < lista.length; i++) {
+                    if (lista[i].isFile()) {
+                        lista[i].delete();
+                    } else {
+                        System.err.println("No se puede borrar la subcarpeta");
+                    }
+                }
+            }
+            return auxiliar.delete();
         }
-        }
-        return true;
-    }*/
+    }
 
+    /**
+     * Mueve o renombra 'origen' a 'destino'.
+     *
+     * @param origen Carpeta o archivo que quieres mover o renombrar.
+     * @param destino Ruta o nombre al que quieres mover o renombrarlo.
+     * @return Devuelve true si se ha podidio mover o renombrar o false en caso
+     * contrario.
+     */
+    public boolean mvFile(String origen, String destino) {
+
+        auxiliar = new File(origen);
+        File auxiliar2 = new File(destino);
+
+        if (origen.startsWith("/") && destino.startsWith("/")) {
+            return auxiliar.renameTo(auxiliar2);
+        } else if (origen.startsWith("/") && !destino.startsWith("/")) {
+            auxiliar2 = new File(getPDW() + "/" + destino);
+            return auxiliar.renameTo(auxiliar2);
+        } else if (!origen.startsWith("/") && destino.startsWith("/")) {
+            auxiliar = new File(getPDW() + "/" + origen);
+            return auxiliar.renameTo(auxiliar2);
+        } else {
+            auxiliar = new File(getPDW() + "/" + origen);
+            auxiliar2 = new File(getPDW() + "/" + destino);
+            return auxiliar.renameTo(auxiliar2);
+        }
+    }
+
+    /**
+     * Muestra al usuario una breve ayuda con los comandos disponibles.
+     */
     public void help() {
         System.out.println("pwd​: Muestra cual es la carpeta actual.\n"
                 + "cd <DIR>​: Cambia la carpeta actual a ‘DIR’. Con .. cambia a la carpeta superior.\n"

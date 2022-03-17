@@ -4,9 +4,9 @@
  * https://creativecommons.org/licenses/by-nc-sa/4.0/
  */
 
-package UD6EjerPOOa;
+package UD6EjerPOO1;
 
-/**
+/*
  *
  * @author Iris Suay <irisau2@gmail.com>
  * @version 1.0

@@ -6,7 +6,7 @@
 
 package UD6CasoPractico1;
 
-/**
+/*
  *
  * @author Iris Suay <irisau2@gmail.com>
  * @version 1.0

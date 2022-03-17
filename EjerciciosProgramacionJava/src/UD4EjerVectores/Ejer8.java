@@ -11,9 +11,8 @@ mostrará cuántos valores del array son igual o superiores a R. */
 package UD4EjerVectores;
 
 import java.util.Scanner;
-import java.lang.Math;
 
-/**
+/*
  *
  * @author Iris Suay <irisau2@gmail.com>
  * @version 1.0

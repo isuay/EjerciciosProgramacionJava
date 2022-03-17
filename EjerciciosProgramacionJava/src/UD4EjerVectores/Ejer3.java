@@ -11,7 +11,7 @@ package UD4EjerVectores;
 
 import java.util.Scanner;
 
-/**
+/*
  *
  * @author Iris Suay <irisau2@gmail.com>
  * @version 1.0

@@ -2,6 +2,12 @@ package UD9Entregable;
 
 import java.util.Scanner;
 
+/**
+ * Clase que interactúa con el usuario y utiliza los métodos de la clase MiniFileManager.
+ *
+ * @author iris
+ * @version 17-03-2022
+ */
 public class MiniTerminal {
 
     public static void main(String[] args) {
@@ -39,9 +45,12 @@ public class MiniTerminal {
                     terminal.mkdir(opcion[1]);
                     break;
                 case "rm":
-                    //terminal.removeFile(opcion[1]);
+                    terminal.removeFile(opcion[1]);
                     break;
                 case "mv":
+                    if (!terminal.mvFile(opcion[1], opcion[2])) {
+                        System.err.println("No existe la ruta o carpeta especificada");
+                    }
                     break;
                 case "help":
                     terminal.help();
