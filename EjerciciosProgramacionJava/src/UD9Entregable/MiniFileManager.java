@@ -31,9 +31,8 @@ public class MiniFileManager {
      * @return Devuelve true si se ha podido cambiar o false en caso contrario.
      */
     public boolean changeDir(String dir) {
-        String rutaAbsoluta = inicio.getAbsolutePath();
         if (dir.equals("..")) {
-            ruta = rutaAbsoluta.substring(0, rutaAbsoluta.lastIndexOf("/"));
+            ruta = getPDW().substring(0, getPDW().lastIndexOf("/"));
             inicio = new File(ruta);
             return true;
         } else if (dir.startsWith("/")) {
@@ -46,7 +45,7 @@ public class MiniFileManager {
                 return false;
             }
         } else if (!dir.startsWith("/")) {
-            ruta = inicio.getAbsolutePath() + "/" + dir;
+            ruta = getPDW() + "/" + dir;
             auxiliar = new File(ruta);
             if (auxiliar.exists()) {
                 inicio = new File(ruta);
@@ -106,7 +105,7 @@ public class MiniFileManager {
      * @return Devuelve true si se ha podido crear o false en caso contrario.
      */
     public boolean mkdir(String dir) {
-        ruta = inicio.getAbsolutePath() + "/" + dir;
+        ruta = getPDW() + "/" + dir;
         if (dir.startsWith("/")) {
             auxiliar = new File(dir);
             String r = auxiliar.getParent();
@@ -132,7 +131,7 @@ public class MiniFileManager {
      * @return Devuelve true si se ha podido eliminar o false en caso contrario
      */
     public boolean removeFile(String dir) {
-        ruta = inicio.getAbsolutePath() + "/" + dir;
+        ruta = getPDW() + "/" + dir;
         if (dir.startsWith("/")) {
             auxiliar = new File(dir);
             String r = auxiliar.getParent();
