@@ -27,11 +27,11 @@ public class CifradoCesar {
 
                 char c = linea.charAt(i);
 
-                if (c >= 65 & c <= 90) {
+                if (c >= 'A' & c <= 'Z') {
 
                     int letra = (int) c + clave;
 
-                    if (letra > 90) {
+                    if (letra > 'Z') {
                         int num = letra - 90;
                         letra = 64 + num;
                     }
