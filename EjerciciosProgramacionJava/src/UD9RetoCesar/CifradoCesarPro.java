@@ -77,7 +77,7 @@ public class CifradoCesarPro {
 
                     char c = linea.charAt(i);
 
-                    if (c >= 'A' & c <= 'Z') {
+                    if (c >= 'A' && c <= 'Z') {
 
                         int let = (int) c + clave;
 
@@ -87,7 +87,7 @@ public class CifradoCesarPro {
                         }
 
                         c = (char) let;
-                    } else if (c >= 'a' & c <= 'z') {
+                    } else if (c >= 'a' && c <= 'z') {
                         int let = (int) c + clave;
 
                         if (let > 'z') {

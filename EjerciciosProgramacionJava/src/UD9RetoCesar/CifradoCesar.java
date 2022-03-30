@@ -27,7 +27,7 @@ public class CifradoCesar {
 
                 char c = linea.charAt(i);
 
-                if (c >= 'A' & c <= 'Z') {
+                if (c >= 'A' && c <= 'Z') {
 
                     int letra = (int) c + clave;
 
