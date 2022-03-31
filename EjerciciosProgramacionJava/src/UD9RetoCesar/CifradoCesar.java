@@ -40,6 +40,7 @@ public class CifradoCesar {
                 }
                 System.out.print(c);
             }
+            
             lector.close();
         } catch (FileNotFoundException e) {
             System.err.println("Error: El fichero no existe");
